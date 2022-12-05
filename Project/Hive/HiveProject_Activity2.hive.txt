@@ -1,0 +1,2 @@
+-- Hive Project Activity 2
+SELECT COUNT(*) FROM episodeIVUpdated WHERE INSTR(line, 'Luke')>0;

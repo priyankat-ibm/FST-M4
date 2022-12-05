@@ -1,0 +1,8 @@
+-- Load the CSV file
+salesTable = LOAD 'hdfs:///user/nandini/sales.csv' USING PigStorage(',') AS (Product:chararray, Price:chararray, Payment_Type:chararray, Name:chararray, City:chararray, State:chararray, Country:chararray);
+-- Group data using the Country column
+groupByCountry = GROUP salesTable BY Country;
+-- Generate Results
+countByCountry = FOREACH groupByCountry GENERATE CONCAT((chararray)$0, CONCAT(':', (chararray)COUNT($1)));
+-- Save Result in HDFS folder
+STORE countByCountry INTO 'hdfs:///user/nandini/salesOutput' USING PigStorage('\t');

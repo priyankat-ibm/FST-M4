@@ -1,0 +1,16 @@
+-- Hive Project Activity 1
+-- Episode 4
+CREATE TABLE episodeIVUpdated (name STRING, line STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' TBLPROPERTIES ("skip.header.line.count"="2");
+LOAD DATA LOCAL INPATH '/root/episodeIV_dialouges.txt' INTO TABLE episodeIVUpdated;
+INSERT OVERWRITE LOCAL DIRECTORY '/root/episode4output' ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' SELECT name, COUNT(*) as linecount FROM episodeIVUpdated GROUP BY name ORDER BY linecount DESC;
+
+
+-- Episode 5
+CREATE TABLE episodeV (name STRING, line STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' TBLPROPERTIES ("skip.header.line.count"="2");
+LOAD DATA LOCAL INPATH '/root/episodeV_dialouges.txt' INTO TABLE episodeV;
+INSERT OVERWRITE LOCAL DIRECTORY '/root/episode5output' ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' SELECT name, COUNT(name) AS no_of_lines from episodeV GROUP BY name ORDER BY no_of_lines;
+
+-- Episode 6
+CREATE TABLE episodeVI (name STRING, line STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' TBLPROPERTIES ("skip.header.line.count"="2");
+LOAD DATA LOCAL INPATH '/root/episodeVI_dialouges.txt' INTO TABLE episodeVI;
+INSERT OVERWRITE LOCAL DIRECTORY '/root/episode6output' ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' SELECT name, COUNT(name) AS no_of_lines from episodeVI GROUP BY name ORDER BY no_of_lines;

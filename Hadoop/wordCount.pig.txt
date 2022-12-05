@@ -1,0 +1,10 @@
+-- Load input file
+inputFile = LOAD 'hdfs:///user/nandini/pigInput.txt' AS (line);
+-- Tokenize each word
+words = FOREACH inputFile GENERATE FLATTEN(TOKENIZE(line)) AS word;
+-- Combine words
+grpd = GROUP words BY word;
+-- Count each word
+cntd = FOREACH grpd GENERATE group, COUNT(words);
+-- Store result in HDFS
+STORE cntd INTO 'hdfs:///user/nandini/results';
